@@ -1,0 +1,40 @@
+string Solution::longestPalindrome(string str) {
+    int n=str.length();
+    bool dp[n][n];
+    memset(dp,0,sizeof(dp));
+    int start=0;
+    int length=1;
+    for(int i=0;i<n;i++)
+    dp[i][i]=1;
+    for(int i=0;i<n-1;i++)
+    {
+    if(str[i]==str[i+1])
+    {
+    dp[i][i+1]=1;
+    if(length<2)
+    {
+    start=i;
+    length=2;
+    }
+    }
+    }
+    
+    for(int len=3;len<=n;len++)
+    {
+    for(int i=0;i<n-len+1;i++)
+    {
+    int j=i+len-1;
+    if(str[i]==str[j])
+    {
+    dp[i][j]=dp[i+1][j-1];
+    }
+    if(dp[i][j] && length<len)
+    {
+    length=len;
+    start=i;
+    }
+    }
+    }
+    return str.substr(start,length);
+
+}
